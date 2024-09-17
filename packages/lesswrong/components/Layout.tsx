@@ -167,20 +167,20 @@ class Layout extends PureComponent<LayoutProps,LayoutState> {
   }
 
   toggleStandaloneNavigation = () => {
+    const [hideNavigationSidebar, setHideNavigationSidebar] = useState(false)
     const { updateUser, currentUser } = this.props
-    this.setState(prevState => {
+
+    useEffect(() => {
       if (currentUser) {
         void updateUser({
           selector: {_id: currentUser._id},
           data: {
-            hideNavigationSidebar: !prevState.hideNavigationSidebar
+            hideNavigationSidebar: !hideNavigationSidebar
           }
         })
       }
-      return {
-        hideNavigationSidebar: !prevState.hideNavigationSidebar
-      }
-    })
+      setHideNavigationSidebar(!hideNavigationSidebar)
+    }, [hideNavigationSidebar])
   }
 
   componentDidMount() {
